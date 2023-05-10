@@ -206,7 +206,7 @@ const ContactCard = ({ details }: any) => {
                                         </div>
                                         <div className="mt-5">
                                             <button className="bg-green-600 text-white py-2 rounded-md text-xl font-semibold cursor-pointer px-4 uppercase">
-                                                Add
+                                                Edit
                                             </button>
                                         </div>
                                     </form>
