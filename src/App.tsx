@@ -7,6 +7,7 @@ function App() {
     return (
         <Routes>
             <Route
+                index
                 path="/"
                 element={<Contacts />}
             />
