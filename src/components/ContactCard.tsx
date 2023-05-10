@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AiFillEye } from "react-icons/ai";
 import { deleteContact, updateContact } from "../redux/slices/contactSlice";
 import { toast } from "react-toastify";
@@ -12,7 +12,7 @@ const ContactCard = ({ details }: any) => {
     const dispatch = useDispatch();
 
     // getting contacts from store
-    const contacts = useSelector((state: any) => state.contact);
+    // const contacts = useSelector((state: any) => state.contact);
 
     const [firstName, setFirstName] = useState(details.firstName);
     const [lastName, setLastName] = useState(details.lastName);
