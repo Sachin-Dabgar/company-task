@@ -48,7 +48,7 @@ class LineChart extends React.Component<
                     yaxis: [
                         {
                             y: 30,
-                            borderColor: "#999",
+                            borderColor: "#000",
                             label: {
                                 show: true,
                                 style: {
@@ -78,11 +78,10 @@ class LineChart extends React.Component<
                 },
                 markers: {
                     size: 0,
-                    style: "hollow",
+                    style: "square",
                 },
                 xaxis: {
                     type: "datetime",
-                    // min: new Date("01 Mar 2012").getTime(),
                     tickAmount: 6,
                 },
                 tooltip: {
@@ -100,126 +99,18 @@ class LineChart extends React.Component<
                     },
                 },
             },
-
-            selection: "one_year",
         };
-    }
-
-    updateData(timeline: any) {
-        this.setState({
-            selection: timeline,
-        });
-
-        switch (timeline) {
-            case "one_month":
-                ApexCharts.exec(
-                    "area-datetime",
-                    "zoomX",
-                    new Date("7 Jan 2013").getTime(),
-                    new Date("9 Feb 2013").getTime()
-                );
-                break;
-            case "six_months":
-                ApexCharts.exec(
-                    "area-datetime",
-                    "zoomX",
-                    new Date("3 Sep 2012").getTime(),
-                    new Date("5 Feb 2013").getTime()
-                );
-                break;
-            case "one_year":
-                ApexCharts.exec(
-                    "area-datetime",
-                    "zoomX",
-                    new Date("7 Feb 2012").getTime(),
-                    new Date("8 Feb 2013").getTime()
-                );
-                break;
-            case "ytd":
-                ApexCharts.exec(
-                    "area-datetime",
-                    "zoomX",
-                    new Date("2 Jan 2013").getTime(),
-                    new Date("4 Feb 2013").getTime()
-                );
-                break;
-            case "all":
-                ApexCharts.exec(
-                    "area-datetime",
-                    "zoomX",
-                    new Date("5 Jan 2012").getTime(),
-                    new Date("6 Feb 2013").getTime()
-                );
-                break;
-            default:
-        }
     }
 
     render() {
         return (
-            <div id="chart">
-                <div className="toolbar">
-                    <button
-                        id="one_month"
-                        onClick={() => this.updateData("one_month")}
-                        className={
-                            this.state.selection === "one_month" ? "active" : ""
-                        }
-                    >
-                        1M
-                    </button>
-                    &nbsp;
-                    <button
-                        id="six_months"
-                        onClick={() => this.updateData("six_months")}
-                        className={
-                            this.state.selection === "six_months"
-                                ? "active"
-                                : ""
-                        }
-                    >
-                        6M
-                    </button>
-                    &nbsp;
-                    <button
-                        id="one_year"
-                        onClick={() => this.updateData("one_year")}
-                        className={
-                            this.state.selection === "one_year" ? "active" : ""
-                        }
-                    >
-                        1Y
-                    </button>
-                    &nbsp;
-                    <button
-                        id="ytd"
-                        onClick={() => this.updateData("ytd")}
-                        className={
-                            this.state.selection === "ytd" ? "active" : ""
-                        }
-                    >
-                        YTD
-                    </button>
-                    &nbsp;
-                    <button
-                        id="all"
-                        onClick={() => this.updateData("all")}
-                        className={
-                            this.state.selection === "all" ? "active" : ""
-                        }
-                    >
-                        ALL
-                    </button>
-                </div>
-
-                <div id="chart-timeline">
-                    <ReactApexChart
-                        options={this.state.options}
-                        series={this.state.series}
-                        type="area"
-                        height={500}
-                    />
-                </div>
+            <div>
+                <ReactApexChart
+                    options={this.state.options}
+                    series={this.state.series}
+                    type="line"
+                    height={700}
+                />
             </div>
         );
     }
