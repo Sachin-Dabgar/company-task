@@ -6,8 +6,10 @@ import tileLayer from "../utils/tileLayer";
 import Leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-const center = [52.22977, 21.01178] as any;
+// center point for the marker
+const center = [13.084622, 80.248357] as any;
 
+// default points for the marker
 const points = [
     {
         lat: 33,
@@ -25,28 +27,27 @@ const points = [
         title: "DZA",
     },
     {
-        lat: 52.23040500771883,
-        lng: 21.012146472930908,
-        title: "hello_",
+        lat: 13.084622,
+        lng: 80.248357,
+        title: "home_",
     },
 ];
 
-function customMarkerIcon(color: any) {
+function customMarkerIcon() {
+    // marker icon
     const svgTemplate = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="marker">
-      <path fill-opacity=".25" d="M16 32s1.427-9.585 3.761-12.025c4.595-4.805 8.685-.99 8.685-.99s4.044 3.964-.526 8.743C25.514 30.245 16 32 16 32z"/>
-      <path fill="#${color}" stroke="#fff" d="M15.938 32S6 17.938 6 11.938C6 .125 15.938 0 15.938 0S26 .125 26 11.875C26 18.062 15.938 32 15.938 32zM16 6a4 4 0 100 8 4 4 0 000-8z"/>
-    </svg>`;
+    <svg viewBox="-4 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --> <title>map-marker</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Vivid.JS" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Vivid-Icons" transform="translate(-125.000000, -643.000000)"> <g id="Icons" transform="translate(37.000000, 169.000000)"> <g id="map-marker" transform="translate(78.000000, 468.000000)"> <g transform="translate(10.000000, 6.000000)"> <path d="M14,0 C21.732,0 28,5.641 28,12.6 C28,23.963 14,36 14,36 C14,36 0,24.064 0,12.6 C0,5.641 6.268,0 14,0 Z" id="Shape" fill="#FF6E6E"> </path> <circle id="Oval" fill="#0C0058" fill-rule="nonzero" cx="14" cy="14" r="7"> </circle> </g> </g> </g> </g> </g> </g></svg>`;
 
     return new Leaflet.DivIcon({
         className: "test",
         html: svgTemplate,
-        iconSize: [40, 40],
+        iconSize: [30, 30],
         iconAnchor: [12, 24],
         popupAnchor: [7, -16],
     });
 }
 
+// component for marker
 const MyMarkers = ({ data, data2 }: any) => {
     let thisPoints = [] as any;
     data2.map((item: any) =>
@@ -65,19 +66,19 @@ const MyMarkers = ({ data, data2 }: any) => {
             <Marker
                 key={index}
                 position={[lat, lng]}
-                icon={customMarkerIcon("B2022F")}
+                icon={customMarkerIcon()}
             >
                 <Popup>
                     <p className="text-[#323232] font-medium">{country}</p>
-                    <p className="text-yellow-600 text-xs">
-                        Active: <span className="font-medium">{active}</span>
+                    <p className="text-yellow-800 text-xs">
+                        Active: <span className="font-bold">{active}</span>
                     </p>
-                    <p className="text-red-600 text-xs">
-                        Deaths: <span className="font-medium">{deaths}</span>
+                    <p className="text-red-800 text-xs">
+                        Deaths: <span className="font-bold">{deaths}</span>
                     </p>
-                    <p className="text-green-600 text-xs">
-                        Recovered:{" "}
-                        <span className="font-medium">{recovered}</span>
+                    <p className="text-green-800 text-xs">
+                        Recovered:
+                        <span className="font-bold">{recovered}</span>
                     </p>
                 </Popup>
             </Marker>
@@ -86,11 +87,13 @@ const MyMarkers = ({ data, data2 }: any) => {
 };
 
 const LeafletMap = () => {
+    // fetching allcovid related data
     const { error, isLoading } = useQuery("getWorldWideData", async () => {
         const res = await fetch("https://disease.sh/v3/covid-19/all");
         return res.json();
     });
 
+    // fetching all country specific data
     const {
         data: data2,
         error: error2,
@@ -101,10 +104,10 @@ const LeafletMap = () => {
     });
 
     if (error) return <div>Request Failed</div>;
-    if (isLoading) return <div>Patience...</div>;
+    if (isLoading) return <div className="spinner"></div>;
 
     if (error2) return <div>Request Failed</div>;
-    if (isLoading2) return <div>Patience...</div>;
+    if (isLoading2) return <div className="spinner"></div>;
 
     return (
         <div className="w-[500px]">
