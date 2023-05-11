@@ -118,7 +118,6 @@ const LeafletMap = () => {
                 scrollWheelZoom={true}
             >
                 <TileLayer {...tileLayer} />
-
                 <MyMarkers
                     data={points}
                     data2={data2}
